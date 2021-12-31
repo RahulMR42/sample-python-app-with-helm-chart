@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-sample-appdeployment
+
+spec:
+  selector:
+    matchLabels:
+      app: python-sample-app
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: python-sample-app
+    spec:
+      containers:
+        - name: python-sample-app
+          # enter the path to your image, be sure to include the correct region prefix
+          image: fra.ocir.io/fahdabidiroottenancy/mr-devops-private/sample-python-app:0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              protocol: TCP
