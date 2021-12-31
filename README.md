@@ -3,6 +3,11 @@ Sample python app made with FASTAPI encomposed with helm chart
 
 ---------------------------------------------------
 
+Assumption 
+
+- Valid kubernetes cluster access.
+- A possible loadbalancer service type for the kubernetes cluster.
+
 Usage Procedure 
 
 
@@ -34,6 +39,38 @@ $ docker push <dockerurl/sample-python-app:<tag>
 ```
 
 - Update the values for helm chart.
+
+```
+$ vi helmchart/sample-fastapi-app/values.yaml
+
+```
+
+  -  Update below values 
+
+  ```
+  namespace
+  image > repository:
+  image > tag
+
+  ```    
+
+- Install the helm chart.
+- You need to install helm and setup the right kubeconfig for the kubernetes cluster to install
+
+
+```
+$ helm install sample-app helmchart/sample-fastapi-app
+$ validate the installation using kubectl get all -n <namespace>
+```
+
+![](images/output.png)
+
+
+- Use the Ladbalancer IP and validate the result (http://loadbalancerIp)
+
+![](images/browserview.png)
+
+
 
 
 
