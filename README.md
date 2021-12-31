@@ -1,4 +1,4 @@
-# python_fastapi_app
+
 Sample python app made with FASTAPI encomposed with helm chart
 
 ---------------------------------------------------

@@ -1,23 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: python-sample-appdeployment
+  namespace: {{ .Values.namespace }}
+  name: {{ include "sample-fastapi-app.fullname" . }}
 
 spec:
   selector:
     matchLabels:
       app: python-sample-app
-  replicas: 3
+  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
         app: python-sample-app
     spec:
       containers:
-        - name: python-sample-app
+        - name: {{ .Chart.Name }}
           # enter the path to your image, be sure to include the correct region prefix
-          image: fra.ocir.io/fahdabidiroottenancy/mr-devops-private/sample-python-app:0.0
-          imagePullPolicy: Always
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: 3000
-              protocol: TCP
+            - containerPort: {{ .Values.service.port }}
+              protocol: {{ .Values.service.protocol }}
